@@ -12,6 +12,7 @@ import pandas as pd
 from scipy import stats
 
 
+
 # from eda_toolkit.utils.logger_utils import configure_logging
 
 
@@ -42,7 +43,7 @@ def bivariate_stats(df: pd.DataFrame, target: str, round_to: int = 3):
         "type",
         "unique_values",
         "skew",
-        "p_value",
+        "pearson_pvalue",
         "r",
         "y = mx + b",
         "spearman",
@@ -50,8 +51,11 @@ def bivariate_stats(df: pd.DataFrame, target: str, round_to: int = 3):
         "kendalltau",
         "kendalltau_pvalue",
         "chi2",
+        "chi2_pvalue",
         "ttest",
+        "ttest_pvalue",
         "F",
+        "F_pvalue"
     ]
     output_df = pd.DataFrame(columns=columns)
 
@@ -151,7 +155,7 @@ def handle_numeric_numeric(df_temp, feature, target, round_to, meta: StatMeta):
     return result_row(
         meta,
         skew=round(df_temp[feature].skew(), round_to),
-        p_value=round(linreg.pvalue, round_to),
+        pearson_pvalue=round(linreg.pvalue, round_to),
         r=round(linreg.rvalue, round_to),
         **{
             "y = mx + b": (
@@ -177,7 +181,7 @@ def handle_categorical_categorical(
         pd.crosstab(df_temp[feature], df_temp[target])
     )
     return result_row(
-        meta, p_value=round(p, round_to), chi2=round(chi2, round_to)
+        meta, chi2_pvalue=round(p, round_to), chi2=round(chi2, round_to)
     )
 
 
@@ -199,7 +203,7 @@ def handle_ttest(
     skew = round(df_temp[numeric_col].skew(), round_to) if not flip else "-"
     return result_row(
         meta,
-        p_value=round(p, round_to),
+        ttest_pvalue=round(p, round_to),
         ttest=round(tstat, round_to),
         skew=skew,
     )
@@ -225,7 +229,7 @@ def handle_anova(df_temp, numeric_col, cat_col, round_to, meta: StatMeta):
         tstat, p = stats.ttest_ind(valid_groups[0], valid_groups[1])
         return result_row(
             meta,
-            p_value=round(p, round_to),
+            ttest_pvalue=round(p, round_to),
             ttest=round(tstat, round_to),
             skew=round(df_temp[numeric_col].skew(), round_to),
         )
@@ -235,7 +239,7 @@ def handle_anova(df_temp, numeric_col, cat_col, round_to, meta: StatMeta):
         f, p = stats.f_oneway(*groups)
         return result_row(
             meta,
-            p_value=round(p, round_to),
+            F_pvalue=round(p, round_to),
             F=round(f, round_to),
             skew=round(df_temp[numeric_col].skew(), round_to),
         )
@@ -263,3 +267,7 @@ def is_invalid_categorical(df_temp, feature, target):
     )
 
 
+if __name__ == "__main__":
+    nba = load_csv_from_data("nba/nba_salaries.csv")
+    nba_bivariate_statistics = bivariate_stats(nba, "Salary")
+    print(nba_bivariate_statistics.head())
