@@ -3,7 +3,6 @@ Module to reduce skewness of features in pandas dataframe
 """
 
 import logging
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -30,8 +29,8 @@ def remove_nans_and_subsample(
 
     Returns:
         - df_cleaned: DataFrame without NaNs in the feature
-        - df_sampled: Possibly subsampled version of df_cleaned
-                        (or same as df_cleaned)
+        - df_sampled: Possibly subsampled version of df_cleaned (or same as
+            df_cleaned)
         - was_subsampled: Boolean flag
     """
     df = df.copy()
@@ -39,21 +38,59 @@ def remove_nans_and_subsample(
     df = df.dropna(subset=[feature])
 
     if verbose:
-        logging.info(
-            f"Removed {initial_len - len(df)} " f"rows with NaN in {feature}"
+        message = (
+            f"Removed {initial_len - len(df)} rows with NaN in '{feature}"
         )
+        logging.info(message)
 
     if len(df) > subsample_limit:
         df_sampled = df.sample(n=subsample_limit, random_state=42)
         if verbose:
             logging.info(
-                f"Subsampled to {len(df_sampled)} rows " f"from {len(df)}"
+                f"Subsampled to {len(df_sampled)} rows from {len(df)}"
             )
         return df, df_sampled, True
 
     if verbose:
         logging.info("No subsampling applied")
     return df, df, False
+
+
+def calculate_transformations(
+    x: pd.DataFrame,
+    transformation: str,
+    power: float = None,
+) -> pd.Series:
+    """
+    Calculate the transformation based on the specified type and power.
+    Parameters:
+        x (pd.Series): The feature series to transform.
+        transformation (str): The type of transformation ('power', 'log',
+             'yeo').
+        round_to (int): The number of decimal places to round the skew result.
+        power (float): The power to apply for the transformation.
+    Returns:
+        pd.Series: The transformed series.
+    """
+    epsilon = 1e-7  # Prevent log(0)
+
+    if transformation == "power":
+        transformed = np.power(x, power)
+        skew = transformed.skew()
+        return transformed, skew.item()
+    elif transformation == "log":
+        transformed = np.log(x + epsilon)
+        skew = transformed.skew()
+        return transformed, skew.item()
+    elif transformation == "yeo":
+        pwr = PowerTransformer(method="yeo-johnson")
+        transformed = pwr.fit_transform(x)
+        transformed = pd.DataFrame(transformed)
+        # transformed = transformed.squeeze()
+        skew = transformed.skew()
+        return transformed, skew.item()
+    else:
+        raise ValueError("Invalid transformation type")
 
 
 def plot_transformations(
@@ -65,8 +102,8 @@ def plot_transformations(
     Plot original and transformed feature distributions.
 
     Parameters:
-        titles_series_dict (dict): Dictionary mapping titles to
-                            transformed Series.
+        titles_series_dict (dict): Dictionary mapping titles to transformed
+            Series.
         original_series (pd.Series): Original feature data.
         original_title (str): Title for the original distribution plot.
     """
@@ -95,6 +132,7 @@ def apply_transformations(
     initial_skew: float,
     max_power: int,
     plot: bool = False,
+    round_to: int = 4,
     skew_threshold: float = 0.5,
     num_power_iterations: int = 100,
 ) -> tuple[dict[str, pd.Series], dict[str, float]]:
@@ -107,8 +145,9 @@ def apply_transformations(
         initial_skew (float): Initial skewness value.
         max_power (int): Upper limit for inverse power transformation.
         plot (bool): Whether to generate histograms of transformations.
+        round_to (int): Number of decimal places to round skewness results.
         skew_threshold (float): Threshold above which skew is considered
-                                significant.
+            significant.
         num_power_iterations (int): Number of inverse power tests to try.
 
     Returns:
@@ -118,10 +157,11 @@ def apply_transformations(
     results = {}
     transformed = {}
 
-    epsilon = 1e-7  # Prevent log(0)
-    initial_skew_plot_title = f"Initial Skewness: {round(initial_skew, 4)}"
+    initial_skew_plot_title = (
+        f"Initial Skewness: {round(initial_skew, round_to)}"
+    )
 
-    if initial_skew > skew_threshold:
+    if abs(initial_skew) > skew_threshold:
         skew_power_transformation = {}
         powers = np.linspace(1.01, max_power, num_power_iterations)
 
@@ -135,33 +175,31 @@ def apply_transformations(
         )
         best_skew = skew_power_transformation[power_min_skew]
 
-        feature_power_name = f"{round(1/power_min_skew, 3)}"
-        transformed[feature_power_name] = np.power(
-            df_temp[feature], 1 / power_min_skew
-        )
-        results[feature_power_name] = abs(round(best_skew, 4))
-        skewness_power_plot_title = "Skewness after raising to "
-        skewness_power_plot_title += f"1/{round(power_min_skew, 3)}: "
+        feature_power_name = f"{round(1/power_min_skew, round_to)}"
+        transformed[feature_power_name] = calculate_transformations(
+            df_temp[[feature]], "power", 1 / power_min_skew
+        )[0]
+        results[feature_power_name] = round(best_skew, round_to)
+        skewness_power_plot_title = "Skewness after raising to 1/"
+        skewness_power_plot_title += f"{round(power_min_skew, 3)}: "
         skewness_power_plot_title += f"{round(best_skew, 4)}"
 
         feature_log_name = "log"
-        transformed[feature_log_name] = np.log(df_temp[feature] + epsilon)
-        log_skew = transformed[feature_log_name].skew()
-        results[feature_log_name] = abs(log_skew)
-        skewness_log_plot_title = "Skewness after log transformation: "
-        skewness_log_plot_title += f"{round(log_skew, 4)}"
+        transformed[feature_log_name], log_skew = calculate_transformations(
+            df_temp[[feature]], "log"
+        )
+        results[feature_log_name] = log_skew
+        skewness_log_plot_title = (
+            f"Skewness after log transformation: {round(log_skew, round_to)}"
+        )
 
         feature_yeo_name = "yeo"
-        pwr = PowerTransformer(method="yeo-johnson")
-        transformed_feature = pwr.fit_transform(df_temp[[feature]])
-        if isinstance(transformed_feature, np.ndarray):
-            transformed[feature_yeo_name] = transformed_feature.flatten()
-        else:
-            transformed[feature_yeo_name] = transformed_feature.squeeze()
-        yeo_skew = pd.Series(transformed[feature_yeo_name]).skew()
-        results[feature_yeo_name] = abs(yeo_skew)
+        transformed[feature_yeo_name], yeo_skew = calculate_transformations(
+            df_temp[[feature]], "yeo"
+        )
+        results[feature_yeo_name] = yeo_skew
         skewness_yeo_plot_title = "Skewness after Yeo-Johnson transformation: "
-        skewness_yeo_plot_title += f"{round(yeo_skew, 4)}"
+        skewness_yeo_plot_title += f"{round(yeo_skew, round_to)}"
 
         if plot:
             plot_transformations(
@@ -176,38 +214,40 @@ def apply_transformations(
 
     elif initial_skew < -skew_threshold:
         feature_power2_name = str(2)
-        transformed[feature_power2_name] = np.power(df_temp[feature], 2)
-        skew2 = transformed[feature_power2_name].skew()
-        results[feature_power2_name] = abs(skew2)
-        skewness_power2_plot_title = "Skewness after raising to 2: "
-        skewness_power2_plot_title += f"{round(skew2, 4)}"
+        transformed[feature_power2_name], skew2 = calculate_transformations(
+            df_temp[[feature]], "power", 2
+        )
+        results[feature_power2_name] = skew2
+        skewness_power2_plot_title = (
+            f"Skewness after raising to 2: {round(skew2, round_to)}"
+        )
 
         feature_power3_name = str(3)
-        transformed[feature_power3_name] = np.power(df_temp[feature], 3)
-        skew3 = transformed[feature_power3_name].skew()
-        results[feature_power3_name] = abs(skew3)
-        skewness_power3_plot_title = "Skewness after raising to 3: "
-        skewness_power3_plot_title += f"{round(skew3, 4)}"
+        transformed[feature_power3_name], skew3 = calculate_transformations(
+            df_temp[[feature]], "power", 3
+        )
+        results[feature_power3_name] = skew3
+        skewness_power3_plot_title = (
+            f"Skewness after raising to 3: {round(skew3, round_to)}"
+        )
 
         feature_log_name = "log"
         shifted = df_temp[feature] + 1 - df_temp[feature].max()
-        transformed[feature_log_name] = np.log(shifted)
-        log_skew = transformed[feature_log_name].skew()
-        results[feature_log_name] = abs(log_skew)
-        skewness_log_plot_title = "Skewness after log transformation: "
-        skewness_log_plot_title += f"{round(log_skew, 4)}"
+        transformed[feature_log_name], log_skew = calculate_transformations(
+            shifted, "log"
+        )
+        results[feature_log_name] = log_skew
+        skewness_log_plot_title = (
+            f"Skewness after log transformation: {round(log_skew, round_to)}"
+        )
 
         feature_yeo_name = "yeo"
-        pwr = PowerTransformer(method="yeo-johnson")
-        transformed_feature = pwr.fit_transform(df_temp[[feature]])
-        if isinstance(transformed_feature, np.ndarray):
-            transformed[feature_yeo_name] = transformed_feature.flatten()
-        else:
-            transformed[feature_yeo_name] = transformed_feature.squeeze()
-        yeo_skew = pd.Series(transformed[feature_yeo_name]).skew()
-        results[feature_yeo_name] = abs(yeo_skew)
+        transformed[feature_yeo_name], yeo_skew = calculate_transformations(
+            df_temp[[feature]], "yeo"
+        )
+        results[feature_yeo_name] = yeo_skew
         skewness_yeo_plot_title = "Skewness after Yeo-Johnson transformation: "
-        skewness_yeo_plot_title += f"{round(yeo_skew, 4)}"
+        skewness_yeo_plot_title += f"{round(yeo_skew, round_to)}"
 
         if plot:
             plot_transformations(
@@ -239,15 +279,15 @@ def select_best_transformation(
 
     Parameters:
         results (dict): A dictionary containing the skewness values for
-        different transformations.
-        final_threshold (float): The threshold for considering a
-        transformation successful.
+            different transformations.
+        final_threshold (float): The threshold for considering a transformation
+            successful.
 
     Returns:
         tuple: A tuple containing the best transformation and a boolean
-        indicating success.
+            indicating success.
     """
-    best_transformation = min(results, key=results.get)
+    best_transformation = min(results, key=lambda k: abs(results[k]))
     best_skew = results[best_transformation]
     success = best_skew <= final_threshold
     return best_transformation, success
@@ -260,27 +300,26 @@ def apply_final_transformation(
     feature: str,
     subsampled: bool,
     skew_positive: bool,
-):
+    round_to: int = 4,
+) -> pd.DataFrame:
     """
     Apply the best transformation to correct the skewness.
 
     Parameters:
         df (pd.DataFrame): The DataFrame containing the feature to transform.
-            transformed (dict): A dictionary containing the transformed
-            feature series.
-
+        transformed (dict): A dictionary containing the transformed feature
+            series.
         best_tranformation (str): The best transformation to apply.
         feature (str): The name of the feature to transform.
         subsampled (bool): A boolean indicating whether the feature is
-                            subsampled.
-        skew_positive (bool): A boolean indicating whether the feature
-                    is positively skewed.
+            subsampled.
+        skew_positive (bool): A boolean indicating whether the feature is
+            positively skewed.
+        round_to (int): The number of decimal places to round the skew result.
 
     Returns:
         pd.DataFrame: The DataFrame with the transformed feature added.
     """
-
-    epsilon = 1e-7
 
     # If subsampled is false, the transformed dictionary contains the
     # transformed series for each transformation
@@ -291,23 +330,25 @@ def apply_final_transformation(
 
         if best_tranformation == "log":
             if skew_positive:
-                df[feature + "_transformed"] = np.log(df[feature] + epsilon)
+                df[feature + "_transformed"] = calculate_transformations(
+                    df[[feature]], "log"
+                )[0]
             else:
                 shifted = df[feature] + 1 - df[feature].max()
-                df[feature + "_transformed"] = np.log(shifted + epsilon)
+                df[feature + "_transformed"] = calculate_transformations(
+                    shifted, "log"
+                )[0]
 
         elif best_tranformation == "yeo":
-            pwr = PowerTransformer(method="yeo-johnson")
-            feature_name = feature + "_transformed"
-            transformed_feature = pwr.fit_transform(df[[feature]])
-            if isinstance(transformed_feature, np.ndarray):
-                df[feature_name] = transformed_feature.flatten()
-            else:
-                df[feature_name] = transformed_feature.squeeze()
+            df[feature + "_transformed"] = calculate_transformations(
+                df[[feature]], "yeo"
+            )[0]
 
         else:
-            power = round(float(best_tranformation), 3)
-            df[feature + "_transformed"] = np.power(df[feature], power)
+            power = round(float(best_tranformation), round_to)
+            df[feature + "_transformed"] = calculate_transformations(
+                df[[feature]], "power", power
+            )[0]
     # subsampled is false, the transformation were already applied to the
     # entire dataset
     else:
@@ -325,7 +366,7 @@ def fallback_to_binary(df, feature, skew_positive=True):
         df (pd.DataFrame): The DataFrame containing the feature to transform.
         feature (str): The name of the feature to transform.
         skew_positive (bool): A boolean indicating whether the feature is
-        positively skewed.
+            positively skewed.
 
     Returns:
         pd.DataFrame: The DataFrame with the transformed feature added.
@@ -353,14 +394,14 @@ def correct_skew(
 ):
     """
     Automatically detects skewness in a DataFrame feature, applies the best
-    transformation
+        transformation
     to reduce skewness, or converts it to binary if transformation fails.
 
     Parameters:
         df (pd.DataFrame): The DataFrame containing the feature to transform.
         feature (str): The name of the feature to transform.
-        max_power (int): The maximum power to apply to the feature (only valid
-            for positively skewed features).
+        max_power (int): The maximum power to apply to the feature
+            (only valid for positively skewed features).
         initial_skew_threshold (float): The threshold for applying
             transformations.
         final_skew_threshold (float): The threshold for considering a
@@ -379,13 +420,12 @@ def correct_skew(
     if verbose:
         logging.info(f"Initial Skewness: {round(skew, 4)}")
 
-    if skew < initial_skew_threshold:
+    if abs(skew) < initial_skew_threshold:
         if verbose:
             logging.info(
-                "Feature not sufficiently skewed. No transformation "
-                "applied."
+                "Feature not sufficiently skewed. No transformation applied."
             )
-            return df_temp
+        return {}, {}
 
     transformed, results = apply_transformations(
         df_temp,
@@ -403,10 +443,9 @@ def correct_skew(
 
     if not success:
         if verbose:
-            logging.info(
-                f"Could not reduce skewness below threshold. "
-                f"Converting '{feature}' to binary."
-            )
+            message = "Could not reduce skewness below threshold. "
+            message += f"Converting '{feature}' to binary."
+            logging.info(message)
         df_out = fallback_to_binary(df, feature, skew_positive=(skew > 0))
     else:
         df_out = apply_final_transformation(
@@ -417,6 +456,7 @@ def correct_skew(
             subsampled,
             skew_positive=(skew > 0),
         )
+
     if plot_transformed_feature:
         fig, axs = plt.subplots(1, 2, figsize=(15, 6))
         sns.histplot(df_out[feature], kde=True, stat="density", ax=axs[0])
@@ -429,25 +469,25 @@ def correct_skew(
                 ax=axs[1],
             )
             axs[1].set_title(feature + "_transformed")
-            plt.show()
         else:
-            sns.countplot(x=df_out[feature + "_binary"], ax=axs[1])
+            sns.countplot(data=df_out, x=feature + "_binary", ax=axs[1])
             axs[1].set_title(feature + "_binary")
-            plt.show()
+        plt.show()
 
     return df_out, results
 
 
 if __name__ == "__main__":
-    #airline = load_csv_from_data("airline/train.csv")
-    #airline_tranformed, resultados = correct_skew(
-    #    airline,
-    #    "Arrival Delay in Minutes",
-    #    plot_all_transformations=True,
-    #    plot_transformed_feature=True,
-    #    verbose=True,
-    #)
-
+    
+    airline = load_csv_from_data("airline/train.csv")
+    airline_tranformed, resultados = correct_skew(
+        airline,
+        "Arrival Delay in Minutes",
+        plot_all_transformations=True,
+        plot_transformed_feature=True,
+        verbose=True,
+     )
+    '''
     insurance = load_csv_from_data("insurance/insurance.csv")
     insurance_tranformed, resultados = correct_skew(
         insurance,
@@ -456,3 +496,4 @@ if __name__ == "__main__":
         plot_transformed_feature=True,
         verbose=True,
     )
+    '''
