@@ -128,6 +128,7 @@ def generate_bar_plot(
     - alpha: significance level
     - plot_type: "bar" or "violin"
     """
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 
     # Choose plot type
