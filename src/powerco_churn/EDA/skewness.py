@@ -135,6 +135,7 @@ def apply_transformations(
     round_to: int = 4,
     skew_threshold: float = 0.5,
     num_power_iterations: int = 100,
+    verbose: bool = True
 ) -> tuple[dict[str, pd.Series], dict[str, float]]:
     """
     Apply transformations to reduce skewness in a DataFrame column.
@@ -271,7 +272,11 @@ def apply_transformations(
             )
 
     else:
-        return {}, {}
+        if verbose:
+            message = f'The skew of the feature {feature} is below '
+            message += f'{skew_threshold}. No tranformation will be applied'
+            logging.info(message)
+        return df_temp, None
 
     return transformed, results
 
@@ -441,7 +446,7 @@ def correct_skew(
             logging.info(
                 "Feature not sufficiently skewed. No transformation applied."
             )
-        return {}, {}
+        return df, None
 
     transformed, results = apply_transformations(
         df_temp,
@@ -452,6 +457,9 @@ def correct_skew(
         skew_threshold=initial_skew_threshold,
         num_power_iterations=100,
     )
+    
+    if results is None:
+        return df, None
 
     best_transformation, success = select_best_transformation(
         results, final_skew_threshold
