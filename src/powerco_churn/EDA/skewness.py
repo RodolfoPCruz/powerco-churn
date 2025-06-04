@@ -161,7 +161,7 @@ def apply_transformations(
         f"Initial Skewness: {round(initial_skew, round_to)}"
     )
 
-    if abs(initial_skew) > skew_threshold:
+    if abs(initial_skew) > skew_threshold and initial_skew > 0:
         skew_power_transformation = {}
         powers = np.linspace(1.01, max_power, num_power_iterations)
 
@@ -185,6 +185,10 @@ def apply_transformations(
         skewness_power_plot_title += f"{round(best_skew, 4)}"
 
         feature_log_name = "log"
+        min_value = df_temp[feature].min()
+        if min_value < 0:
+            correction_value = abs(min_value) + 1
+            df_temp[[feature]] = df_temp[[feature]] + correction_value
         transformed[feature_log_name], log_skew = calculate_transformations(
             df_temp[[feature]], "log"
         )
@@ -212,7 +216,7 @@ def apply_transformations(
                 initial_skew_plot_title,
             )
 
-    elif initial_skew < -skew_threshold:
+    elif abs(initial_skew) > skew_threshold and initial_skew < 0:
         feature_power2_name = str(2)
         transformed[feature_power2_name], skew2 = calculate_transformations(
             df_temp[[feature]], "power", 2
@@ -232,7 +236,8 @@ def apply_transformations(
         )
 
         feature_log_name = "log"
-        shifted = df_temp[feature] + 1 - df_temp[feature].max()
+        correction_value = df_temp[feature].max() + 1
+        shifted = correction_value - df_temp[feature]
         transformed[feature_log_name], log_skew = calculate_transformations(
             shifted, "log"
         )
@@ -272,7 +277,7 @@ def apply_transformations(
 
 
 def select_best_transformation(
-    results: dict, final_threshold: float
+    results: dict, final_threshold: float, verbose: bool = True
 ) -> tuple[str, bool]:
     """
     Select the transformation that produced the minimum skewness
@@ -289,7 +294,15 @@ def select_best_transformation(
     """
     best_transformation = min(results, key=lambda k: abs(results[k]))
     best_skew = results[best_transformation]
-    success = best_skew <= final_threshold
+    if verbose:
+        logging.info(f"Best transformation: {best_transformation}")
+        logging.info(f"Skew after transformation: {best_skew}")
+    success = abs(best_skew) <= final_threshold
+    if verbose:
+        if success:
+            logging.info("Transformation successful")
+        else:
+            logging.info("Transformation failed. Converting to binary")
     return best_transformation, success
 
 
@@ -330,11 +343,14 @@ def apply_final_transformation(
 
         if best_tranformation == "log":
             if skew_positive:
+                if df[feature].min < 0:
+                    df[[feature]] = df[[feature]] + abs(df[[feature]].min) + 1
                 df[feature + "_transformed"] = calculate_transformations(
                     df[[feature]], "log"
                 )[0]
             else:
-                shifted = df[feature] + 1 - df[feature].max()
+                correction_value = df[feature].max() + 1
+                shifted = correction_value - df[feature]
                 df[feature + "_transformed"] = calculate_transformations(
                     shifted, "log"
                 )[0]
