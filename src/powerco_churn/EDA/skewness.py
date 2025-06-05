@@ -411,7 +411,7 @@ def correct_skew(
     final_skew_threshold=0.1,
     plot_all_transformations=False,
     plot_transformed_feature=False,
-    verbose=True,
+    verbose=True
 ):
     """
     Automatically detects skewness in a DataFrame feature, applies the best
@@ -435,6 +435,8 @@ def correct_skew(
 
     Returns:
         pd.DataFrame: The DataFrame with the transformed feature added.
+        results (dic): The skew after each transformation
+        transformation (str): The transformation hat produced the best results.
     """
     df, df_temp, subsampled = remove_nans_and_subsample(df, feature, verbose)
     skew = df[feature].skew()
@@ -459,7 +461,7 @@ def correct_skew(
     )
     
     if results is None:
-        return df, None
+        return df, None, None
 
     best_transformation, success = select_best_transformation(
         results, final_skew_threshold
@@ -498,7 +500,10 @@ def correct_skew(
             axs[1].set_title(feature + "_binary")
         plt.show()
 
-    return df_out, results
+    if success:
+        return df_out, results, best_transformation
+    else:
+        return df_out, results, 'Converted to binary'
 
 
 if __name__ == "__main__":
