@@ -7,7 +7,10 @@ from pathlib import Path
 
 
 def configure_logging(
-    log_file_name: str = "app.log", level: int = logging.INFO
+    log_file_name: str = "app.log", 
+    level: int = logging.INFO,
+    project_root: Path = None,
+
 ):
     """
     Set up logging to both the console and a file. Logs are saved to the 'logs'
@@ -25,15 +28,16 @@ def configure_logging(
 
     logger.setLevel(level)
     formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    
+     # Determine project root
+    if project_root is None:
+        project_root = Path(__file__).resolve()
+        while (project_root.name != 'powerco_churn' and 
+                            project_root != project_root.parent:)
+            project_root = project_root.parent
 
-    # Determine project root and logs directory
-    project_root = (
-        Path(__file__).resolve().parents[3]
-    )  # e.g., src/eda_toolkit/utils/ → up 2 levels
     logs_dir = project_root / "logs"
     logs_dir.mkdir(parents=True, exist_ok=True)
-
-    # Final log path
     log_file_path = logs_dir / log_file_name
 
     # File handler
