@@ -33,7 +33,7 @@ def configure_logging(
     if project_root is None:
         project_root = Path(__file__).resolve()
         while (project_root.name != 'powerco_churn' and 
-                            project_root != project_root.parent:)
+                            project_root != project_root.parent):
             project_root = project_root.parent
 
     logs_dir = project_root / "logs"
