@@ -1,0 +1,19 @@
+pandas>=2.2.3,<3.0.0
+matplotlib>=3.10.3,<4.0.0
+jupyter
+seaborn
+scipy
+scikit-learn
+notebook
+ipykernel
+pyqt5
+lightgbm
+imbalanced-learn
+
+# Dev tools
+pytest
+pytest-cov
+black
+flake8
+isort
+
