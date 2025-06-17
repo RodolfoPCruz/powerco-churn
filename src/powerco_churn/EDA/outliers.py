@@ -14,7 +14,7 @@ import pandas as pd
 import seaborn as sns
 from sklearn import set_config
 from sklearn.cluster import DBSCAN
-from sklearn.experimental import enable_iterative_imputer  # noqa: F401
+from sklearn.experimental import enable_iterative_imputer  
 from sklearn.impute import IterativeImputer
 from sklearn.preprocessing import MinMaxScaler
 

@@ -20,7 +20,7 @@ sns.set_style("darkgrid")
 def remove_nans_and_subsample(
     df: pd.DataFrame,
     feature: str,
-    verbose: bool = True,
+    verbose: bool = False,
     subsample_limit: int = 5000,
 ):
     """
@@ -135,7 +135,7 @@ def apply_transformations(
     round_to: int = 4,
     skew_threshold: float = 0.5,
     num_power_iterations: int = 100,
-    verbose: bool = True
+    verbose: bool = False
 ) -> tuple[dict[str, pd.Series], dict[str, float]]:
     """
     Apply transformations to reduce skewness in a DataFrame column.
@@ -282,7 +282,7 @@ def apply_transformations(
 
 
 def select_best_transformation(
-    results: dict, final_threshold: float, verbose: bool = True
+    results: dict, final_threshold: float, verbose: bool = False
 ) -> tuple[str, bool]:
     """
     Select the transformation that produced the minimum skewness
@@ -406,12 +406,12 @@ def fallback_to_binary(df, feature, skew_positive=True):
 def correct_skew(
     df,
     feature,
-    max_power=50,
-    initial_skew_threshold=0.5,
-    final_skew_threshold=0.1,
-    plot_all_transformations=False,
-    plot_transformed_feature=False,
-    verbose=True
+    max_power = 50,
+    initial_skew_threshold = 0.5,
+    final_skew_threshold = 0.1,
+    plot_all_transformations = False,
+    plot_transformed_feature = False,
+    verbose = False
 ):
     """
     Automatically detects skewness in a DataFrame feature, applies the best
@@ -453,11 +453,11 @@ def correct_skew(
     transformed, results = apply_transformations(
         df_temp,
         feature,
-        initial_skew=skew,
-        max_power=max_power,
-        plot=plot_all_transformations,
-        skew_threshold=initial_skew_threshold,
-        num_power_iterations=100,
+        initial_skew = skew,
+        max_power = max_power,
+        plot = plot_all_transformations,
+        skew_threshold = initial_skew_threshold,
+        num_power_iterations = 100,
     )
     
     if results is None:

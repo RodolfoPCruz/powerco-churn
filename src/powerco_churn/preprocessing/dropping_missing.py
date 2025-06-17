@@ -4,7 +4,6 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from pathlib import Path
 import logging
 
-configure_logging(log_file_name = "drop_missing_values.log")
 
 class DropMissing(BaseEstimator, TransformerMixin):
     def __init__(self, axis = 0, verbose = True):
@@ -33,8 +32,9 @@ class DropMissing(BaseEstimator, TransformerMixin):
         return X 
 
 if __name__ == "__main__":
+
+    configure_logging(log_file_name = "drop_missing_values.log")
     drop_missing = DropMissing()
-    
     current_file = Path(__file__).resolve()
     base_path = current_file.parents[3]  # 0 is file, 1 is parent, ..., 3 = three levels up
     base_path = str(base_path)

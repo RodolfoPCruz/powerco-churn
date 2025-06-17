@@ -5,7 +5,6 @@ from pathlib import Path
 from datetime import datetime
 from powerco_churn.utils.logger_utils import configure_logging
 
-configure_logging(log_file_name = "date_processing.log")
 
 class DateParserTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, date_columns, standard_format = '%Y-%m-%d', verbose = True):
@@ -97,9 +96,10 @@ class CreatingDateFeatures(BaseEstimator, TransformerMixin):
         return X_copy
 
 if __name__ == "__main__":
+    configure_logging(log_file_name = "date_processing.log")
     date_parser = DateParserTransformer(date_columns = ['date_activ', 'date_end', 'date_modif_prod', 'date_renewal'], verbose = False)
     feature_creator = CreatingDateFeatures(date_columns = ['date_activ', 'date_end', 'date_modif_prod', 'date_renewal'], verbose = False)
-    
+
     current_file = Path(__file__).resolve()
     base_path = current_file.parents[3]  # 0 is file, 1 is parent, ..., 3 = three levels up
     base_path = str(base_path)

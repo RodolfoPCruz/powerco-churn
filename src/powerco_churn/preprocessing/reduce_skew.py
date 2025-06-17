@@ -1,3 +1,13 @@
+import pandas as pd
+from powerco_churn.utils.logger_utils import configure_logging
+from sklearn.base import BaseEstimator, TransformerMixin
+from pathlib import Path
+from collections import defaultdict
+from sklearn.preprocessing import PowerTransformer
+from powerco_churn.EDA.skewness import correct_skew
+import numpy as np
+
+
 class ReduceSkew(BaseEstimator, TransformerMixin):
     
     def __init__(self, skew_threshold=0.5):
@@ -68,3 +78,15 @@ class ReduceSkew(BaseEstimator, TransformerMixin):
             X_copy[self.yeo_features] = self._yeo_transformer.transform(X_copy[self.yeo_features])
 
         return X_copy
+    
+if __name__ == "__main__":
+
+    configure_logging(log_file_name = "reduce_skew.log") 
+    current_file = Path(__file__).resolve()
+    base_path = current_file.parents[3]  # 0 is file, 1 is parent, ..., 3 = three levels up
+    base_path = str(base_path)
+    client_data_train = pd.read_csv(base_path + '/data/raw/train/train_client_data_raw.csv')
+    price_data_train = pd.read_csv(base_path + '/data/raw/train/train_price_data_raw.csv')
+    
+    skew_reducer = ReduceSkew()
+    client_data_cleaned = skew_reducer.fit_transform(client_data_train)
