@@ -448,7 +448,8 @@ def correct_skew(
             logging.info(
                 "Feature not sufficiently skewed. No transformation applied."
             )
-        return df, None
+            print('vai tomar no cu filho da puta')
+        return df, None, None
 
     transformed, results = apply_transformations(
         df_temp,
@@ -459,7 +460,7 @@ def correct_skew(
         skew_threshold = initial_skew_threshold,
         num_power_iterations = 100,
     )
-    
+
     if results is None:
         return df, None, None
 

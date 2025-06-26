@@ -114,9 +114,10 @@ def clean_outliers(
     """
     set_config(transform_output="pandas")
 
-    logging.info(
+    if verbose:
+        logging.info(
         "Detecting and treating outliers " "using traditional methods..."
-    )
+        )
 
     df = df.copy()
     initial_number_rows = df.shape[0]
