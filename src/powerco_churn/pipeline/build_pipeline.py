@@ -16,6 +16,9 @@ from pathlib import Path
 import pandas as pd
 from sklearn.preprocessing import FunctionTransformer
 
+import sys
+import os
+
 
 
 pipeline_client_data = Pipeline(
@@ -57,14 +60,21 @@ def merge_data(X):
     return merged
 
 
+def get_preprocess_pipeline():
 
-pipeline = Pipeline([
+    pipeline = Pipeline([
     ('merge', FunctionTransformer(merge_data, validate = False)),
     ('basic wrangling', FunctionTransformer(basic_wrangling)),
     ('replacing outliers',ReplaceOutliers()),
     ('reduce skew', ReduceSkew()),
     ('scale and encode', ScaleEncode())
-])
+     ])
+    return pipeline
+
+
+
+
+
 
 if __name__ == '__main__':
 
@@ -73,6 +83,7 @@ if __name__ == '__main__':
     base_path = str(base_path)
     client_data_train = pd.read_csv(base_path + '/data/raw/train/train_client_data_raw.csv')
     price_data_train = pd.read_csv(base_path + '/data/raw/train/train_price_data_raw.csv')
-    teste = pipeline.fit_transform([client_data_train, price_data_train])
-    
+    pipeline = get_preprocess_pipeline()
+    y_train = pd.read_csv(base_path + '/data/raw/train/y_train.csv')
+    teste = pipeline.fit_transform([client_data_train, price_data_train], y_train)
     

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/988364002448166934/9ec16bc49bcc405b9e780e82d1882c12/artifacts
+deleted_time: 1751484690149
+end_time: 1751477522787
+entry_point_name: ''
+experiment_id: '988364002448166934'
+lifecycle_stage: deleted
+run_id: 9ec16bc49bcc405b9e780e82d1882c12
+run_name: baseline_lightgbm
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751477488231
+status: 3
+tags: []
+user_id: rodolfo
