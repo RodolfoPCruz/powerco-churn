@@ -23,13 +23,22 @@ y_test = pd.read_csv(base_path + '/data/raw/test/y_test.csv')
 mlflow.set_tracking_uri(f"file:{base_path}/mlruns")  # Goes one level up
 mlflow.set_experiment("powerco_churn")
 
-with mlflow.start_run(run_name="baseline_lightgbm"):
+parser = argparse.ArgumentParser()
+parser.add_argument("--n_estimators", type = int, default = 100, help =" Number of trees in the forest")
+parser.add_argument("--scale_pos_weight", type = float, default = 9.0, help = "Weights associated with classes ")
+parser.add_argument("--random_state", type = int, default = 42, help = "Random number seed")
+parser.add_argument("--class_weight", type = str, default = 'balanced', help = "Weights associated with classes")
+parser.add_argument("--run_name", type = str, help = "Name of the run")
+
+args = parser.parse_args()
+
+with mlflow.start_run(run_name = args.run_name):
 
     
-    model_lgbm = LGBMClassifier( class_weight = 'balanced', 
-                                 scale_pos_weight = 9.0, 
-                                n_estimators = 100,
-                                random_state = 42)
+    model_lgbm = LGBMClassifier(class_weight = args.class_weight,
+                                scale_pos_weight = args.scale_pos_weight, 
+                                n_estimators = args.n_estimators,
+                                random_state = args.random_state)
     scoring = {
         'accuracy': 'accuracy',
         'precision': 'precision',
@@ -38,7 +47,7 @@ with mlflow.start_run(run_name="baseline_lightgbm"):
 
     pre_process_pipeline = get_preprocess_pipeline()
     x_train = pre_process_pipeline.fit_transform([client_data_train, price_data_train])
-    x_test = pre_process_pipeline.transform([client_data_train, price_data_train])
+    x_test = pre_process_pipeline.transform([client_data_test, price_data_test])
 
     results = cross_validate(model_lgbm, 
                              x_train, 

@@ -1,19 +1,10 @@
-pandas>=2.2.3,<3.0.0
-matplotlib>=3.10.3,<4.0.0
-jupyter
-seaborn
-scipy
-scikit-learn
-notebook
-ipykernel
-pyqt5
-lightgbm
-imbalanced-learn
-
-# Dev tools
-pytest
-pytest-cov
-black
-flake8
-isort
+mlflow==3.1.1
+scikit-learn==1.6.1
+pandas==2.3.0
+numpy==2.2.6
+matplotlib==3.10.3
+seaborn==0.13.2
+shap==0.48.0
+lightgbm==4.6.0
+imbalanced-learn==0.13.0
 

@@ -1,0 +1,14 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/7c38a2ac90b14ed697e2c73c4142da2c/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7c38a2ac90b14ed697e2c73c4142da2c
+run_name: respected-trout-657
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751572593717
+status: 1
+tags: []
+user_id: rodolfo

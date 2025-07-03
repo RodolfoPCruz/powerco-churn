@@ -1,0 +1,15 @@
+name: powerco-churn
+
+python_env: requirements.txt
+
+entry_points:
+  main:
+    parameters:
+      n_estimators: {type: int, default: 100}
+      scale_pos_weight: {type: float, default: 9.0}
+      random_state: {type: int, default: 42}
+      class_weight: {type: str, default: 'balanced'}
+      run_name: {type: str}
+
+    command: >
+            python train_model.py --n_estimators {n_estimators} --scale_pos_weight {scale_pos_weight} --random_state {random_state} --class_weight {class_weight} --run_name {run_name}
