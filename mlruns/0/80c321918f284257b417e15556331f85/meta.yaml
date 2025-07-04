@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/80c321918f284257b417e15556331f85/artifacts
+deleted_time: 1751640104994
+end_time: 1751638189704
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 80c321918f284257b417e15556331f85
+run_name: bustling-asp-772
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751638189685
+status: 4
+tags: []
+user_id: rodolfo

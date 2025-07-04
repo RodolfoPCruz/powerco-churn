@@ -1,8 +1,9 @@
 artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/988364002448166934/3b7fd8ad171141e68a06935db7daad62/artifacts
+deleted_time: 1751652875041
 end_time: 1751377588941
 entry_point_name: ''
 experiment_id: '988364002448166934'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 3b7fd8ad171141e68a06935db7daad62
 run_name: ML_notebook
 source_name: ''

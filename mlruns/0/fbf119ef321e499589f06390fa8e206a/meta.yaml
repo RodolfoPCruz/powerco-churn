@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/fbf119ef321e499589f06390fa8e206a/artifacts
+deleted_time: 1751640127213
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: fbf119ef321e499589f06390fa8e206a
+run_name: merciful-foal-275
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751636734509
+status: 1
+tags: []
+user_id: rodolfo

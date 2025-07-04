@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/a4cad5a373604578862a88dd15b00532/artifacts
+deleted_time: 1751640127213
+end_time: 1751639502615
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: a4cad5a373604578862a88dd15b00532
+run_name: lyrical-cub-477
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751639467139
+status: 4
+tags: []
+user_id: rodolfo

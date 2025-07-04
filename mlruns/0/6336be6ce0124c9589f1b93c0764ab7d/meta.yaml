@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/6336be6ce0124c9589f1b93c0764ab7d/artifacts
+deleted_time: 1751640132740
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 6336be6ce0124c9589f1b93c0764ab7d
+run_name: powerful-turtle-506
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751633679256
+status: 1
+tags: []
+user_id: rodolfo

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/e37cd30b69934ce49147ae4c4d609974/artifacts
+deleted_time: 1751640132740
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: e37cd30b69934ce49147ae4c4d609974
+run_name: orderly-seal-877
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751634155438
+status: 1
+tags: []
+user_id: rodolfo

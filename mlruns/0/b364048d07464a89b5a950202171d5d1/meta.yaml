@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/b364048d07464a89b5a950202171d5d1/artifacts
+deleted_time: 1751640104993
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: b364048d07464a89b5a950202171d5d1
+run_name: big-goose-745
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751633908582
+status: 1
+tags: []
+user_id: rodolfo

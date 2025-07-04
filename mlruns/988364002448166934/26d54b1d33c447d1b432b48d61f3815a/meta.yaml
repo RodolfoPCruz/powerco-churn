@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/988364002448166934/26d54b1d33c447d1b432b48d61f3815a/artifacts
+deleted_time: 1751652417505
+end_time: 1751652391068
+entry_point_name: ''
+experiment_id: '988364002448166934'
+lifecycle_stage: deleted
+run_id: 26d54b1d33c447d1b432b48d61f3815a
+run_name: teste
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751652357064
+status: 3
+tags: []
+user_id: rodolfo

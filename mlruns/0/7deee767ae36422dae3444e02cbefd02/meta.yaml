@@ -1,8 +1,9 @@
 artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/7deee767ae36422dae3444e02cbefd02/artifacts
+deleted_time: 1751640116838
 end_time: null
 entry_point_name: ''
 experiment_id: '0'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 7deee767ae36422dae3444e02cbefd02
 run_name: efficient-elk-57
 source_name: ''

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/3cb4bbcff4994b29ab299ef70e1a1900/artifacts
+deleted_time: 1751646955534
+end_time: 1751645835532
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 3cb4bbcff4994b29ab299ef70e1a1900
+run_name: capable-midge-26
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751645833547
+status: 4
+tags: []
+user_id: rodolfo

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/bc2a8926e09d4e599ebe6d014a2a238d/artifacts
+deleted_time: 1751640094942
+end_time: 1751639756556
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: bc2a8926e09d4e599ebe6d014a2a238d
+run_name: unleashed-kite-730
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751639722377
+status: 4
+tags: []
+user_id: rodolfo

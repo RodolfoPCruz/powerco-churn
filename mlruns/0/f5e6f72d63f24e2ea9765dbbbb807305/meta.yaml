@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/f5e6f72d63f24e2ea9765dbbbb807305/artifacts
+deleted_time: 1751640116838
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: f5e6f72d63f24e2ea9765dbbbb807305
+run_name: efficient-cub-616
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751631414787
+status: 1
+tags: []
+user_id: rodolfo

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/6e4a8b8938eb438ab76185c9366b62fc/artifacts
+deleted_time: 1751640116842
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 6e4a8b8938eb438ab76185c9366b62fc
+run_name: fun-toad-265
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751631444174
+status: 1
+tags: []
+user_id: rodolfo

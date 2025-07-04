@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/25f3663b3a3444cc8c038d49c2489211/artifacts
+deleted_time: 1751652867040
+end_time: 1751648720809
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 25f3663b3a3444cc8c038d49c2489211
+run_name: suave-steed-311
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751648719029
+status: 4
+tags: []
+user_id: rodolfo

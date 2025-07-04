@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/f498e32db0374b668fcca525a2abd0d1/artifacts
+deleted_time: 1751640116839
+end_time: 1751637522520
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: f498e32db0374b668fcca525a2abd0d1
+run_name: efficient-wren-146
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751637522501
+status: 4
+tags: []
+user_id: rodolfo

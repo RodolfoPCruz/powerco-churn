@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/6a3eb25dd1af4ca4bd8b820767be831e/artifacts
+deleted_time: 1751640094943
+end_time: 1751639825588
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 6a3eb25dd1af4ca4bd8b820767be831e
+run_name: tasteful-snipe-419
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751639791488
+status: 4
+tags: []
+user_id: rodolfo

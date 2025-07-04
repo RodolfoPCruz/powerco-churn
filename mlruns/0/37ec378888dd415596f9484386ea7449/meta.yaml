@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/37ec378888dd415596f9484386ea7449/artifacts
+deleted_time: 1751647710954
+end_time: 1751647675926
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 37ec378888dd415596f9484386ea7449
+run_name: delicate-hen-371
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751647641943
+status: 4
+tags: []
+user_id: rodolfo

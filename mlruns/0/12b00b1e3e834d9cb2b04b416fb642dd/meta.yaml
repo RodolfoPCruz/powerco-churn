@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/12b00b1e3e834d9cb2b04b416fb642dd/artifacts
+deleted_time: 1751640116837
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 12b00b1e3e834d9cb2b04b416fb642dd
+run_name: defiant-wasp-928
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751637227205
+status: 1
+tags: []
+user_id: rodolfo

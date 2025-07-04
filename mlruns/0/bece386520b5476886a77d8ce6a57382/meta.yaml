@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/bece386520b5476886a77d8ce6a57382/artifacts
+deleted_time: 1751640127212
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: bece386520b5476886a77d8ce6a57382
+run_name: luxuriant-hawk-776
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751639415678
+status: 1
+tags: []
+user_id: rodolfo

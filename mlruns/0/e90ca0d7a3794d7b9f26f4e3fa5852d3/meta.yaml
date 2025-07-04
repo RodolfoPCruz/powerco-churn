@@ -1,8 +1,9 @@
 artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/e90ca0d7a3794d7b9f26f4e3fa5852d3/artifacts
+deleted_time: 1751640104973
 end_time: null
 entry_point_name: ''
 experiment_id: '0'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: e90ca0d7a3794d7b9f26f4e3fa5852d3
 run_name: adorable-mink-585
 source_name: ''

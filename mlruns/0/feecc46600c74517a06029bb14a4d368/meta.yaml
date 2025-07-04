@@ -1,8 +1,9 @@
 artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/feecc46600c74517a06029bb14a4d368/artifacts
+deleted_time: 1751640094941
 end_time: null
 entry_point_name: ''
 experiment_id: '0'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: feecc46600c74517a06029bb14a4d368
 run_name: unruly-owl-211
 source_name: ''

@@ -1,8 +1,9 @@
 artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/4f6508fcd8a74337a7e05dabb93a65b7/artifacts
+deleted_time: 1751640116841
 end_time: null
 entry_point_name: ''
 experiment_id: '0'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 4f6508fcd8a74337a7e05dabb93a65b7
 run_name: fortunate-elk-448
 source_name: ''

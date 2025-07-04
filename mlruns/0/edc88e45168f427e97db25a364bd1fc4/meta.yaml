@@ -1,8 +1,9 @@
 artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/0/edc88e45168f427e97db25a364bd1fc4/artifacts
+deleted_time: 1751640116837
 end_time: null
 entry_point_name: ''
 experiment_id: '0'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: edc88e45168f427e97db25a364bd1fc4
 run_name: dashing-whale-548
 source_name: ''
