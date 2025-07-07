@@ -1,0 +1,14 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/988364002448166934/6a97a2e4c64d41fe851c909120b1c1ac/artifacts
+end_time: 1751919061574
+entry_point_name: ''
+experiment_id: '988364002448166934'
+lifecycle_stage: active
+run_id: 6a97a2e4c64d41fe851c909120b1c1ac
+run_name: treinamento_1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751919023568
+status: 3
+tags: []
+user_id: rodolfo

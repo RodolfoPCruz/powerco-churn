@@ -6,21 +6,26 @@ from lightgbm import LGBMClassifier
 from sklearn.model_selection import cross_validate
 from sklearn.metrics import make_scorer, accuracy_score, precision_score, recall_score
 import argparse
+from powerco_churn.utils.log_mlflow_utils import load_logged_dataset
 
 current_file = Path(__file__).resolve()
 base_path = current_file.parents[2]  # 0 is file, 1 is parent, ..., 3 = three levels up
 base_path = str(base_path)
 
-client_data_train = pd.read_csv(base_path + '/data/raw/train/train_client_data_raw.csv')
-price_data_train = pd.read_csv(base_path + '/data/raw/train/train_price_data_raw.csv')
-y_train = pd.read_csv(base_path + '/data/raw/train/y_train.csv')
-
-client_data_test = pd.read_csv(base_path + '/data/raw/test/test_client_data_raw.csv')
-price_data_test  = pd.read_csv(base_path + '/data/raw/test/test_price_data_raw.csv')
-y_test = pd.read_csv(base_path + '/data/raw/test/y_test.csv')    
+run_id = '37a11a4d37394a01a54f562039a5ba83'
 
 mlflow.set_tracking_uri(f"file:{base_path}/mlruns")  # Goes one level up
-#mlflow.set_experiment("powerco_churn")
+mlflow.set_experiment("powerco_churn")
+
+client_data_train = load_logged_dataset(run_id, 'datasets/client_train_data/client_train_data.parquet')
+client_data_test = load_logged_dataset(run_id, 'datasets/client_test_data/client_test_data.parquet')
+
+y_train = load_logged_dataset(run_id, 'datasets/y_train/y_train.parquet')
+y_test = load_logged_dataset(run_id, 'datasets/y_test/y_test.parquet')
+
+price_data_train = load_logged_dataset(run_id, 'datasets/price_train_data/price_train_data.parquet')
+price_data_test = load_logged_dataset(run_id, 'datasets/price_test_data/price_test_data.parquet')
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_estimators", type = int, default = 100, help =" Number of trees in the forest")
