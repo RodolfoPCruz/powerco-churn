@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/8be9d82be3494ade8c50299609c40539/artifacts
+deleted_time: 1752857559547
+end_time: 1752856825327
+entry_point_name: ''
+experiment_id: '903185134689546534'
+lifecycle_stage: deleted
+run_id: 8be9d82be3494ade8c50299609c40539
+run_name: train_model
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1752856823304
+status: 3
+tags: []
+user_id: rodolfo

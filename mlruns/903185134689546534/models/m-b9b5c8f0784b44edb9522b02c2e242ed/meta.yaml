@@ -1,0 +1,10 @@
+artifact_location: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/models/m-b9b5c8f0784b44edb9522b02c2e242ed/artifacts
+creation_timestamp: 1752856823322
+experiment_id: '903185134689546534'
+last_updated_timestamp: 1752856825326
+model_id: m-b9b5c8f0784b44edb9522b02c2e242ed
+model_type: null
+name: model
+source_run_id: 8be9d82be3494ade8c50299609c40539
+status: 2
+status_message: null
