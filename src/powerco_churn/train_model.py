@@ -8,6 +8,7 @@ from sklearn.metrics import make_scorer, accuracy_score, precision_score, recall
 import argparse
 from powerco_churn.utils.log_mlflow_utils import load_logged_dataset
 from sklearn.pipeline import Pipeline
+from mlflow.models import infer_signature
 
 current_file = Path(__file__).resolve()
 base_path = current_file.parents[2]  # 0 is file, 1 is parent, ..., 3 = three levels up
@@ -50,7 +51,7 @@ scoring = {
 }
 
 #run id generated when the pre-processing pipeline was logged
-run_id_pipeline = '8142c0c2ca004887a918401cf94bf952'
+run_id_pipeline = 'f53f8f467be84c519b0ed7617b53aaf2'
 pre_process_pipeline = mlflow.sklearn.load_model(f"runs:/{run_id_pipeline}/preprocessing_pipeline")
 
 #preprocessing the raw data
@@ -83,12 +84,21 @@ recall_test = recall_score(y_test, y_pred)
 
 
 #Creating a new pipeline that integrates the preprocessing step and the model
+preprocess_pipeline = get_preprocess_pipeline()
 
+full_pipeline = Pipeline([
+    ('preprocessing', preprocess_pipeline),
+    ('model', model_lgbm )
+])
+X_input = [client_data_train, price_data_train]
+full_pipeline.fit(X_input, y_train)
 
-
+signature = infer_signature(pd.concat(X_input, axis = 1),
+                            full_pipeline.predict(X_input))
 
 
 #mlflow.sklearn.log_model(model_lgbm, "model")
+
 with mlflow.start_run(run_name = "train_model"):
     mlflow.log_param("n_estimators", args.n_estimators)
     mlflow.log_param("scale_pos_weight", args.scale_pos_weight)
@@ -98,4 +108,6 @@ with mlflow.start_run(run_name = "train_model"):
     mlflow.log_metric("test_accuracy", acc_test)
     mlflow.log_metric("test_precision", precision_test)
     mlflow.log_metric("test_recall", recall_test)
-    mlflow.sklearn.log_model(model_lgbm, "model")
+    mlflow.sklearn.log_model(model_lgbm, "model_lgbm")
+    mlflow.sklearn.log_model(full_pipeline, "complete_pipeline", signature = signature)
+

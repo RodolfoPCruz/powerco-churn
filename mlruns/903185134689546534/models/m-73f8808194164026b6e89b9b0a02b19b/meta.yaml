@@ -1,0 +1,10 @@
+artifact_location: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/models/m-73f8808194164026b6e89b9b0a02b19b/artifacts
+creation_timestamp: 1752869071173
+experiment_id: '903185134689546534'
+last_updated_timestamp: 1752869073260
+model_id: m-73f8808194164026b6e89b9b0a02b19b
+model_type: null
+name: complete_pipeline
+source_run_id: 475afc6eb6f14c76a4900dd537ec4e05
+status: 2
+status_message: null
