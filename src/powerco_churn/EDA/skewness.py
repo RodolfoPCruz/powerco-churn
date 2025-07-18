@@ -85,7 +85,7 @@ def calculate_transformations(
     elif transformation == "yeo":
         pwr = PowerTransformer(method="yeo-johnson")
         transformed = pwr.fit_transform(x)
-        transformed = pd.DataFrame(transformed)
+        transformed = pd.DataFrame(transformed, index = x.index, columns = x.columns)
         # transformed = transformed.squeeze()
         skew = transformed.skew()
         return transformed, skew.item()

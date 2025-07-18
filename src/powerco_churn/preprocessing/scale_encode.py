@@ -24,9 +24,11 @@ class ScaleEncode(BaseEstimator, TransformerMixin):
                                    and X[feature].nunique() > 2] 
         self.categorical_features_ = [feature for feature in X.columns if  pd.api.types.is_object_dtype(X[feature]) 
                                                              or isinstance(X[feature], pd.CategoricalDtype)] 
+        X_categorical = X[self.categorical_features_].copy()
         self.scaler.fit(X[self.numerical_features_])
-        self.onehotencoder.fit(X[self.categorical_features_])
-        
+        self.onehotencoder.fit(X_categorical)
+        self.columns = self.onehotencoder.get_feature_names_out(X_categorical.columns)
+
         return self
 
     def transform(self, X):
@@ -34,7 +36,11 @@ class ScaleEncode(BaseEstimator, TransformerMixin):
         check_is_fitted(self, ['numerical_features_', 'categorical_features_'])
         X_copy = X.copy()
         X_copy[self.numerical_features_] = self.scaler.transform(X_copy[self.numerical_features_])
+        if not isinstance(X_copy, pd.DataFrame):
+            X_copy = pd.DataFrame(X_copy, index = X.index, columns = X.columns)
         X_copy_encoded = self.onehotencoder.transform(X_copy[self.categorical_features_])
+        if not isinstance(X_copy_encoded, pd.DataFrame):
+            X_copy_encoded = pd.DataFrame(X_copy_encoded, index = X.index, columns = self.columns)
         X_copy = X_copy.drop(columns = self.categorical_features_)
         X_copy = pd.concat([X_copy, X_copy_encoded], axis = 1)
 

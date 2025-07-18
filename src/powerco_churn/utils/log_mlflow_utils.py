@@ -24,7 +24,7 @@ def log_dataset_mlflow(df, source, name, context = "training"):
     with tempfile.TemporaryDirectory() as tmpdir:
         file_path = os.path.join(tmpdir, name + ".parquet")
         df.to_parquet(file_path)
-        mlflow.log_artifact(local_path = file_path, artifact_path="datasets/" + name)
+        mlflow.log_artifact(local_path = file_path, artifact_path = "datasets/" + name)
 
 def load_logged_dataset(run_id, dataset_path):
     """

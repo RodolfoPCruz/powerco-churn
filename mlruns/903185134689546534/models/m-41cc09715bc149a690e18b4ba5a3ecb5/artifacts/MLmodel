@@ -1,0 +1,14 @@
+artifact_path: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/models/m-41cc09715bc149a690e18b4ba5a3ecb5/artifacts
+flavors:
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 3.1.1
+model_id: m-41cc09715bc149a690e18b4ba5a3ecb5
+model_size_bytes: 12919
+model_uuid: m-41cc09715bc149a690e18b4ba5a3ecb5
+prompts: null
+run_id: eb18dd84b2f0402d833ad245d7c4ce85
+utc_time_created: '2025-07-17 20:00:04.726031'

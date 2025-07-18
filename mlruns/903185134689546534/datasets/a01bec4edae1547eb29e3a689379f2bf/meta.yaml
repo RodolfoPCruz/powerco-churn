@@ -1,0 +1,65 @@
+digest: e539a356
+name: x_test
+profile: '{"num_rows": 11684, "num_elements": 817880}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "cons_12m", "required": true},
+  {"type": "long", "name": "cons_gas_12m", "required": true}, {"type": "double", "name":
+  "cons_last_month", "required": true}, {"type": "double", "name": "forecast_cons_12m",
+  "required": true}, {"type": "double", "name": "forecast_cons_year", "required":
+  true}, {"type": "double", "name": "forecast_discount_energy", "required": true},
+  {"type": "double", "name": "forecast_meter_rent_12m", "required": true}, {"type":
+  "double", "name": "forecast_price_energy_off_peak", "required": true}, {"type":
+  "double", "name": "forecast_price_energy_peak", "required": true}, {"type": "double",
+  "name": "forecast_price_pow_off_peak", "required": true}, {"type": "double", "name":
+  "imp_cons", "required": true}, {"type": "double", "name": "margin_gross_pow_ele",
+  "required": true}, {"type": "double", "name": "margin_net_pow_ele", "required":
+  true}, {"type": "long", "name": "nb_prod_act", "required": true}, {"type": "double",
+  "name": "net_margin", "required": true}, {"type": "double", "name": "num_years_antig",
+  "required": true}, {"type": "double", "name": "pow_max", "required": true}, {"type":
+  "double", "name": "contract_length", "required": true}, {"type": "double", "name":
+  "days_until_end", "required": true}, {"type": "double", "name": "days_since_modification",
+  "required": true}, {"type": "double", "name": "days_until_renewal", "required":
+  true}, {"type": "double", "name": "mean_price_off_peak_var", "required": true},
+  {"type": "double", "name": "mean_price_peak_var", "required": true}, {"type": "double",
+  "name": "mean_price_mid_peak_var", "required": true}, {"type": "double", "name":
+  "mean_price_off_peak_fix", "required": true}, {"type": "long", "name": "mean_price_peak_fix",
+  "required": true}, {"type": "long", "name": "mean_price_mid_peak_fix", "required":
+  true}, {"type": "double", "name": "mean_energy_price", "required": true}, {"type":
+  "double", "name": "mean_potency_price", "required": true}, {"type": "double", "name":
+  "energy_peak_minus_offpeak", "required": true}, {"type": "double", "name": "potency_peak_minus_offpeak",
+  "required": true}, {"type": "double", "name": "last_price_off_peak_var", "required":
+  true}, {"type": "double", "name": "last_price_peak_var", "required": true}, {"type":
+  "long", "name": "last_price_mid_peak_var", "required": true}, {"type": "double",
+  "name": "last_price_off_peak_fix", "required": true}, {"type": "long", "name": "last_price_peak_fix",
+  "required": true}, {"type": "long", "name": "last_price_mid_peak_fix", "required":
+  true}, {"type": "double", "name": "difference_price_off_peak_var", "required": true},
+  {"type": "long", "name": "difference_price_peak_var", "required": true}, {"type":
+  "double", "name": "difference_price_mid_peak_var", "required": true}, {"type": "double",
+  "name": "difference_price_off_peak_fix", "required": true}, {"type": "long", "name":
+  "difference_price_peak_fix", "required": true}, {"type": "long", "name": "difference_price_mid_peak_fix",
+  "required": true}, {"type": "double", "name": "price_off_peak_var_slope", "required":
+  true}, {"type": "double", "name": "price_peak_var_slope", "required": true}, {"type":
+  "double", "name": "price_mid_peak_var_slope", "required": true}, {"type": "double",
+  "name": "price_off_peak_fix_slope", "required": true}, {"type": "double", "name":
+  "price_peak_fix_slope", "required": true}, {"type": "double", "name": "price_mid_peak_fix_slope",
+  "required": true}, {"type": "double", "name": "std_price_off_peak_var", "required":
+  true}, {"type": "double", "name": "std_price_peak_var", "required": true}, {"type":
+  "long", "name": "std_price_mid_peak_var", "required": true}, {"type": "double",
+  "name": "std_price_off_peak_fix", "required": true}, {"type": "long", "name": "std_price_peak_fix",
+  "required": true}, {"type": "long", "name": "std_price_mid_peak_fix", "required":
+  true}, {"type": "double", "name": "channel_sales_MISSING", "required": true}, {"type":
+  "double", "name": "channel_sales_epumfxlbckeskwekxbiuasklxalciiuu", "required":
+  true}, {"type": "double", "name": "channel_sales_ewpakwlliwisiwduibdlfmalxowmwpci",
+  "required": true}, {"type": "double", "name": "channel_sales_fixdbufsefwooaasfcxdxadsiekoceaa",
+  "required": true}, {"type": "double", "name": "channel_sales_foosdfpfkusacimwkcsosbicdxkicaua",
+  "required": true}, {"type": "double", "name": "channel_sales_lmkebamcaaclubfxadlmueccxoimlema",
+  "required": true}, {"type": "double", "name": "channel_sales_sddiedcslfslkckwlfkdpoeeailfpeds",
+  "required": true}, {"type": "double", "name": "channel_sales_usilxuppasemubllopkaafesmlibmsdf",
+  "required": true}, {"type": "double", "name": "has_gas_f", "required": true}, {"type":
+  "double", "name": "has_gas_t", "required": true}, {"type": "double", "name": "origin_up_MISSING",
+  "required": true}, {"type": "double", "name": "origin_up_kamkkxfxxuwbdslkwifmmcsiusiuosws",
+  "required": true}, {"type": "double", "name": "origin_up_ldkssxwpmemidmecebumciepifcamkci",
+  "required": true}, {"type": "double", "name": "origin_up_lxidpiddsbxsbosboudacockeimpuepw",
+  "required": true}, {"type": "double", "name": "origin_up_usapbepcfoloekilkwsdiboslwaxobdp",
+  "required": true}]}'
+source: '{"uri": "/home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/data/cleaned/train/x_test.csv"}'
+source_type: local

@@ -1,0 +1,10 @@
+artifact_location: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/models/m-41cc09715bc149a690e18b4ba5a3ecb5/artifacts
+creation_timestamp: 1752782404721
+experiment_id: '903185134689546534'
+last_updated_timestamp: 1752782407242
+model_id: m-41cc09715bc149a690e18b4ba5a3ecb5
+model_type: null
+name: preprocessing_pipeline
+source_run_id: eb18dd84b2f0402d833ad245d7c4ce85
+status: 2
+status_message: null

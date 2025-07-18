@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/928174acc9bc4baeafa74d744d0d032b/artifacts
+deleted_time: 1752753787200
+end_time: 1752753762108
+entry_point_name: ''
+experiment_id: '903185134689546534'
+lifecycle_stage: deleted
+run_id: 928174acc9bc4baeafa74d744d0d032b
+run_name: EDA_notebook
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1752753762094
+status: 3
+tags: []
+user_id: rodolfo

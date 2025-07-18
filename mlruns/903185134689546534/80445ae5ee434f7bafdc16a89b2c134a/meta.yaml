@@ -1,0 +1,14 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/80445ae5ee434f7bafdc16a89b2c134a/artifacts
+end_time: 1752754568768
+entry_point_name: ''
+experiment_id: '903185134689546534'
+lifecycle_stage: active
+run_id: 80445ae5ee434f7bafdc16a89b2c134a
+run_name: Feature_Engineering_notebook
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1752754568763
+status: 3
+tags: []
+user_id: rodolfo

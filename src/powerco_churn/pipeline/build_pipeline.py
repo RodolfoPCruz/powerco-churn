@@ -8,7 +8,7 @@ from powerco_churn.preprocessing.scale_encode import ScaleEncode
 
 from powerco_churn.preprocessing.temporal_series_processing import TransformPricesTemporalSeries
 from powerco_churn.EDA.basic_data_wrangling import basic_wrangling
-
+from powerco_churn.utils.log_mlflow_utils import log_dataset_mlflow
 
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import Pipeline
@@ -18,6 +18,9 @@ from sklearn.preprocessing import FunctionTransformer
 
 import sys
 import os
+
+import mlflow.sklearn
+import mlflow
 
 
 
@@ -72,18 +75,46 @@ def get_preprocess_pipeline():
     return pipeline
 
 
-
-
-
-
 if __name__ == '__main__':
 
     current_file = Path(__file__).resolve()
     base_path = current_file.parents[3]  # 0 is file, 1 is parent, ..., 3 = three levels up
     base_path = str(base_path)
+
     client_data_train = pd.read_csv(base_path + '/data/raw/train/train_client_data_raw.csv')
     price_data_train = pd.read_csv(base_path + '/data/raw/train/train_price_data_raw.csv')
-    pipeline = get_preprocess_pipeline()
+
+    client_data_test = pd.read_csv(base_path + '/data/raw/test/test_client_data_raw.csv')
+    price_data_test = pd.read_csv(base_path + '/data/raw/test/test_price_data_raw.csv')
+    
     y_train = pd.read_csv(base_path + '/data/raw/train/y_train.csv')
-    teste = pipeline.fit_transform([client_data_train, price_data_train], y_train)
+    y_test = pd.read_csv(base_path + '/data/raw/test/y_test.csv')
+
+    mlflow.set_tracking_uri(f"file:{base_path}/mlruns")  # Goes one level up
+    mlflow.set_experiment("powerco_churn")
+
+    pipeline = get_preprocess_pipeline()
+    x_train = pipeline.fit_transform([client_data_train, price_data_train])
+    x_test = pipeline.transform([client_data_test, price_data_test])
+
+    x_train.to_csv(base_path + '/data/cleaned/train/x_train.csv', index = False)
+    x_test.to_csv(base_path + '/data/cleaned/test/x_test.csv', index = False)
+
+    y_train.to_csv(base_path + '/data/cleaned/train/y_train.csv', index = False)
+    y_test.to_csv(base_path + '/data/cleaned/test/y_test.csv', index = False)
+
+
+    with mlflow.start_run(run_name = 'Preprocessing Pipeline'):
+        mlflow.sklearn.log_model(
+        sk_model = pipeline,
+        name = "preprocessing_pipeline",
+        registered_model_name=None  # Optional: register in Model Registry
+    )
+        log_dataset_mlflow(x_train, source = base_path + '/data/cleaned/train/x_train.csv', name = 'x_train', context = 'training') 
+        log_dataset_mlflow(x_train, source = base_path + '/data/cleaned/train/x_test.csv', name = 'x_test', context = 'testing')
+
+        log_dataset_mlflow(y_train, source = base_path + '/data/cleaned/train/y_train.csv', name = 'y_train', context = 'training') 
+        log_dataset_mlflow(y_train, source = base_path + '/data/cleaned/train/y_test.csv', name = 'y_test', context = 'testing')
+
+
     

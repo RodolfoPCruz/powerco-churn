@@ -12,19 +12,21 @@ current_file = Path(__file__).resolve()
 base_path = current_file.parents[2]  # 0 is file, 1 is parent, ..., 3 = three levels up
 base_path = str(base_path)
 
-run_id = '37a11a4d37394a01a54f562039a5ba83'
+run_id_raw_dataset = '8cd45ac031db4540b94bdc7efd917411'
 
 mlflow.set_tracking_uri(f"file:{base_path}/mlruns")  # Goes one level up
 mlflow.set_experiment("powerco_churn")
 
-client_data_train = load_logged_dataset(run_id, 'datasets/client_train_data/client_train_data.parquet')
-client_data_test = load_logged_dataset(run_id, 'datasets/client_test_data/client_test_data.parquet')
 
-y_train = load_logged_dataset(run_id, 'datasets/y_train/y_train.parquet')
-y_test = load_logged_dataset(run_id, 'datasets/y_test/y_test.parquet')
+client_data_train = load_logged_dataset(run_id_raw_dataset, 'datasets/client_train_data/client_train_data.parquet')
+client_data_test = load_logged_dataset(run_id_raw_dataset, 'datasets/client_test_data/client_test_data.parquet')
 
-price_data_train = load_logged_dataset(run_id, 'datasets/price_train_data/price_train_data.parquet')
-price_data_test = load_logged_dataset(run_id, 'datasets/price_test_data/price_test_data.parquet')
+y_train = load_logged_dataset(run_id_raw_dataset, 'datasets/y_train/y_train.parquet')
+y_test = load_logged_dataset(run_id_raw_dataset, 'datasets/y_test/y_test.parquet')
+
+price_data_train = load_logged_dataset(run_id_raw_dataset, 'datasets/price_train_data/price_train_data.parquet')
+price_data_test = load_logged_dataset(run_id_raw_dataset, 'datasets/price_test_data/price_test_data.parquet')
+
 
 
 parser = argparse.ArgumentParser()
@@ -45,9 +47,12 @@ scoring = {
     'recall': 'recall'
 }
 
-pre_process_pipeline = get_preprocess_pipeline()
+run_id_pipeline = '8142c0c2ca004887a918401cf94bf952'
+pre_process_pipeline = mlflow.sklearn.load_model(f"runs:/{run_id_pipeline}/preprocessing_pipeline")
+
 x_train = pre_process_pipeline.fit_transform([client_data_train, price_data_train])
 x_test = pre_process_pipeline.transform([client_data_test, price_data_test])
+
 
 results = cross_validate(model_lgbm, 
                             x_train, 
