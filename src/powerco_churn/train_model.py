@@ -1,4 +1,4 @@
-from pipeline.build_pipeline import get_preprocess_pipeline
+from powerco_churn.pipeline.build_pipeline import get_preprocess_pipeline
 from pathlib import Path
 import pandas as pd
 import mlflow

@@ -1,0 +1,14 @@
+artifact_uri: file:///home/rodolfo/Documents/Rodolfo/Python_Projects/projetos_sem_espacos/churn-powerco/powerco-churn/Notebooks/../mlruns/903185134689546534/badee646bed1443eb9bfdd98498b07f3/artifacts
+end_time: 1753362983908
+entry_point_name: ''
+experiment_id: '903185134689546534'
+lifecycle_stage: active
+run_id: badee646bed1443eb9bfdd98498b07f3
+run_name: inference_pipeline
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753362983898
+status: 3
+tags: []
+user_id: rodolfo
