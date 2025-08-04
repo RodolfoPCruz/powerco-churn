@@ -9,6 +9,7 @@ import argparse
 from powerco_churn.utils.log_mlflow_utils import load_logged_dataset
 from sklearn.pipeline import Pipeline
 from mlflow.models import infer_signature
+import os
 
 current_file = Path(__file__).resolve()
 base_path = current_file.parents[2]  # 0 is file, 1 is parent, ..., 3 = three levels up
@@ -58,6 +59,10 @@ pre_process_pipeline = mlflow.sklearn.load_model(f"runs:/{run_id_pipeline}/prepr
 x_train = pre_process_pipeline.fit_transform([client_data_train, price_data_train])
 x_test = pre_process_pipeline.transform([client_data_test, price_data_test])
 
+#creating directory to save the results
+ARTIFACT_DIR = "artifacts"
+os.makedirs(ARTIFACT_DIR, exist_ok=True)
+
 #training the model using cross validation
 results = cross_validate(model_lgbm, 
                             x_train, 
@@ -65,7 +70,7 @@ results = cross_validate(model_lgbm,
                         cv = 5, 
                         scoring=scoring)
 results_df = pd.DataFrame(results)
-results_df.to_csv('src/powerco_churn/artifacts/cross_val_metrics.csv')
+results_df.to_csv('./artifacts/cross_val_metrics.csv')
 #mlflow.log_artifact("src/powerco_churn/artifacts/cross_val_metrics.csv")
 
 #training the model using the enrire dataset. The model will be evaluated
@@ -97,14 +102,13 @@ signature = infer_signature(pd.concat(X_input, axis = 1),
                             full_pipeline.predict(X_input))
 
 
-#mlflow.sklearn.log_model(model_lgbm, "model")
-
 with mlflow.start_run(run_name = "train_model"):
     mlflow.log_param("n_estimators", args.n_estimators)
     mlflow.log_param("scale_pos_weight", args.scale_pos_weight)
     mlflow.log_param("random_state", args.random_state)
     mlflow.log_param("class_weight", args.class_weight)
-    mlflow.log_artifact("src/powerco_churn/artifacts/cross_val_metrics.csv")
+    mlflow.log_artifact("./artifacts/cross_val_metrics.csv", 
+                                    artifact_path = 'metrics')
     mlflow.log_metric("test_accuracy", acc_test)
     mlflow.log_metric("test_precision", precision_test)
     mlflow.log_metric("test_recall", recall_test)

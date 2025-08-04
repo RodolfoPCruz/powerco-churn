@@ -1,6 +1,0 @@
-digest: 5a8fdf27
-name: y_train
-profile: '{"num_rows": 11684, "num_elements": 11684}'
-schema: '{"mlflow_colspec": [{"type": "long", "name": "churn", "required": true}]}'
-source: '{"uri": "../data/raw/train/y_train.csv"}'
-source_type: local

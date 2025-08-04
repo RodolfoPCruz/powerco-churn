@@ -1,6 +1,0 @@
-digest: 64296c56
-name: y_test
-profile: '{"num_rows": 2922, "num_elements": 2922}'
-schema: '{"mlflow_colspec": [{"type": "long", "name": "churn", "required": true}]}'
-source: '{"uri": "../data/raw/test/y_test.csv"}'
-source_type: local

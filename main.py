@@ -15,7 +15,7 @@ raw_dataset_run_id = '8cd45ac031db4540b94bdc7efd917411'
 model_run_id = '31385a7783574529b30b8b7cf2d96e67'
 
 client_data_artifact_test = "datasets/client_test_data/client_test_data.parquet"
-local_path_client_data_test = "'data/raw/test/test_client_data_raw.csv'"
+local_path_client_data_test = "data/raw/test/test_client_data_raw.csv"
 
 price_data_artifact_test = "datasets/price_test_data/price_test_data.parquet"
 local_path_price_data_test = 'data/raw/test/test_price_data_raw.csv'
@@ -37,7 +37,7 @@ def load_data(run_id, artifact_path, local_path):
     logging.info(f"Loading {file_name}")
 
     try:
-
+        
         path = mlflow.artifacts.download_artifacts(run_id = run_id,
                                                     artifact_path = artifact_path)
         return pd.read_parquet(path)
