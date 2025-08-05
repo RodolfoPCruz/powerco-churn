@@ -4,6 +4,7 @@ Utility functions for logging data to mlflow and to load it
 """
 
 from mlflow.data import from_pandas
+from mlflow.tracking import MlflowClient
 import tempfile
 import os
 import mlflow
@@ -36,7 +37,19 @@ def load_logged_dataset(run_id, artifact_path, local_path):
         artifact_path (str): path to the dataset in mlflow
     """
     tracking_uri = mlflow.get_tracking_uri().replace("file:", "")
-    print(f"Tracking URI: {tracking_uri}")
+    #print(f"Tracking URI: {tracking_uri}")
+    
+    try:
+        client = MlflowClient()
+        run_id = client.get_run(run_id)
+        logging.info("✅ Run exists!")
+    except Exception as e:
+        if os.path.exists(local_path):
+            return pd.read_csv(local_path)
+        else:
+            raise FileNotFoundError(f"The mlflow run does not exist and it was not possible to find a local file at {local_path}")
+
+    
     
     try:
         local_path = mlflow.artifacts.download_artifacts(run_id=run_id, artifact_path=artifact_path)
