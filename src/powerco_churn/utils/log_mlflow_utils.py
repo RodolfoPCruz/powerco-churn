@@ -39,12 +39,14 @@ def load_logged_dataset(run_id, artifact_path, local_path):
     tracking_uri = mlflow.get_tracking_uri().replace("file:", "")
     #print(f"Tracking URI: {tracking_uri}")
     
+    #verify wether the run_id exists
     try:
         client = MlflowClient()
-        run_id = client.get_run(run_id)
+        run = client.get_run(run_id)
         logging.info("✅ Run exists!")
     except Exception as e:
         if os.path.exists(local_path):
+            logging.info("✅Run id does not exist. Loading from local file")
             return pd.read_csv(local_path)
         else:
             raise FileNotFoundError(f"The mlflow run does not exist and it was not possible to find a local file at {local_path}")

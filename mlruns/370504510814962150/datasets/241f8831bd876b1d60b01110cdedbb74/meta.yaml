@@ -1,0 +1,12 @@
+digest: f1ba1e1a
+name: price_train_data
+profile: '{"num_rows": 140113, "num_elements": 1120904}'
+schema: '{"mlflow_colspec": [{"type": "string", "name": "id", "required": true}, {"type":
+  "string", "name": "price_date", "required": true}, {"type": "double", "name": "price_off_peak_var",
+  "required": true}, {"type": "double", "name": "price_peak_var", "required": true},
+  {"type": "double", "name": "price_mid_peak_var", "required": true}, {"type": "double",
+  "name": "price_off_peak_fix", "required": true}, {"type": "double", "name": "price_peak_fix",
+  "required": true}, {"type": "double", "name": "price_mid_peak_fix", "required":
+  true}]}'
+source: '{"uri": "../data/raw/train/train_price_data_raw.csv"}'
+source_type: local
